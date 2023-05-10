@@ -9,7 +9,7 @@ function CardQuestion(props) {
         {
           props.question.alternatives.map((alternative, index) => (
 
-            <CardAlternative key={`${props.question.name}${index}`} img_alt={alternative.img_alt} img_src={`/imgs/${alternative.img_src}`} name={props.question.name} value={alternative.value} setSelected={props.setSelected} isSelected={props.answers[props.question.name] === alternative.value} />
+            <CardAlternative key={`${props.question.name}${index}`} img_alt={alternative.img_alt} img_src={`imgs/${alternative.img_src}`} name={props.question.name} value={alternative.value} setSelected={props.setSelected} isSelected={props.answers[props.question.name] === alternative.value} />
           ))
         }
 
