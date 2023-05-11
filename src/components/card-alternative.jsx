@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 function CardAlternative(props) {
-  //onClick={() => props.setSelected(props.name, props.value)}
+
   return <div className={`card-alternative ${props.isSelected ? 'selected' : ''}`} onClick={() => { props.setSelected(props.name, props.value) }} >
     <img src={props.img_src} alt={props.img_alt} />
 

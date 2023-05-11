@@ -6,7 +6,9 @@ import Modal from './components/modal';
 
 function App() {
   const [answers, setAnswers] = useState({});
-  const [result, setResult] = useState('');
+  const [primaryStyle, setPrimaryStyle] = useState('');
+  const [secondStyle, setSecondStyle] = useState('');
+  const [thirdStyle, setThirdStyle] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,40 +26,54 @@ function App() {
 
   function onAvaliate() {
     setIsOpen(true)
-    let countA = 0;
-    let countB = 0;
-    let countC = 0;
-    let countD = 0;
-    let countE = 0;
-    let countF = 0;
-    let countG = 0;
+
+    let allAnswers = [];
 
     Object.values(answers).forEach(answer => {
-      if (answer === 'a') countA++;
-      else if (answer === 'b') countB++;
-      else if (answer === 'c') countC++;
-      else if (answer === 'd') countD++;
-      else if (answer === 'e') countE++;
-      else if (answer === 'f') countF++;
-      else if (answer === 'g') countG++;
+      allAnswers = allAnswers.concat(answer);
     })
-    const arr = Array.of(countA, countB, countC, countD, countE, countF, countG);
-    const biggest = Math.max(countA, countB, countC, countD, countE, countF, countG)
-    const index = arr.indexOf(biggest);
+
+    console.log(allAnswers);
+    const map1 = new Map()
+    map1.set('a', allAnswers.filter(el => el == 'a').length);
+    map1.set('b', allAnswers.filter(el => el == 'b').length);
+    map1.set('c', allAnswers.filter(el => el == 'c').length);
+    map1.set('d', allAnswers.filter(el => el == 'd').length);
+    map1.set('e', allAnswers.filter(el => el == 'e').length);
+    map1.set('f', allAnswers.filter(el => el == 'f').length);
+    map1.set('g', allAnswers.filter(el => el == 'g').length);
+
+    const mapSort1 = Array.from(new Map([...map1.entries()].sort((a, b) => b[1] - a[1])));
+    console.log(mapSort1);
+
+
+
+    let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
     let styles = ['Romântico', 'Elegante', 'Clássico', 'Dramático Urbano', 'Criativo',
       'Casual/Esportivo', 'Sexy'];
 
-    const style = styles[index];
-
-    setResult(style);
+    setPrimaryStyle(styles[letters.indexOf(mapSort1[0][0])]);
+    setSecondStyle(styles[letters.indexOf(mapSort1[1][0])]);
+    setThirdStyle(styles[letters.indexOf(mapSort1[2][0])]);
   }
 
   function setSelected(question, alternative) {
+    let arrayAnswers;
+
+    if (answers[question] === undefined) {
+      arrayAnswers = [alternative]
+    } else if (answers[question].indexOf(alternative) !== -1) {
+      answers[question].pop(alternative);
+      arrayAnswers = [...answers[question]]
+    } else {
+      arrayAnswers = [...answers[question], alternative]
+    }
+
     const newAnswers = {
       ...answers,
-      [question]: alternative,
+      [question]: arrayAnswers
     }
-    setAnswers(newAnswers)
+    setAnswers(newAnswers);
   }
   return (
     <>
@@ -79,7 +95,7 @@ function App() {
 
       </div >
       <Modal onClose={onClose} open={isOpen} >
-        <h3>O seu estilo é: {result}</h3>
+        <h3>O seu estilo predominante é o {primaryStyle} alternado entre o {secondStyle} e o {thirdStyle}</h3>
       </Modal>
     </>
   )
