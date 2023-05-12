@@ -37,6 +37,10 @@
    margin-bottom: 1rem;
  }
 
+ .card-question.pending {
+   border: solid 1px red;
+ }
+
  .avaliate button {
    background-color: #4CAF50;
    /* Green */
@@ -88,7 +92,7 @@
  .alternatives {
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between;
+   justify-content: center;
    gap: 1.5rem
  }
 
@@ -110,4 +114,11 @@
    /* for dialog-polyfill */
    /* a transparent shade of gray */
    background-color: rgba(0, 0, 0, 0.4);
+ }
+
+ @media only screen and (width > 490px) {
+   .alternatives {
+     justify-content: center;
+
+   }
  }

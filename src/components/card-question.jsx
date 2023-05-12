@@ -2,8 +2,12 @@ import PropTypes from 'prop-types';
 import CardAlternative from './card-alternative';
 
 function CardQuestion(props) {
+  let pending = false;
+  if (Object.prototype.hasOwnProperty.call(props.answers, props.question.name)) {
+    pending = props.answers[props.question.name].length === 0;
+  }
   return (
-    <div className="card-question">
+    <div className={`card-question ${pending ? 'pending' : ''} `}>
       <h2>{props.question.title}</h2>
       <div className="alternatives">
         {

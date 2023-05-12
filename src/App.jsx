@@ -6,9 +6,8 @@ import Modal from './components/modal';
 
 function App() {
   const [answers, setAnswers] = useState({});
-  const [primaryStyle, setPrimaryStyle] = useState('');
-  const [secondStyle, setSecondStyle] = useState('');
-  const [thirdStyle, setThirdStyle] = useState('');
+
+  const [message, setMessage] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,6 +25,16 @@ function App() {
 
   function onAvaliate() {
     setIsOpen(true)
+    if (Object.keys(answers).length < 6) {
+      setMessage('Você deve escolher pelo menos uma opção para cada pergunta')
+      return;
+    }
+    for (let arr of Object.values(answers)) {
+      if (arr.length == 0) {
+        setMessage('Você deve escolher pelo menos uma opção para cada pergunta');
+        return;
+      }
+    }
 
     let allAnswers = [];
 
@@ -33,7 +42,6 @@ function App() {
       allAnswers = allAnswers.concat(answer);
     })
 
-    console.log(allAnswers);
     const map1 = new Map()
     map1.set('a', allAnswers.filter(el => el == 'a').length);
     map1.set('b', allAnswers.filter(el => el == 'b').length);
@@ -44,17 +52,16 @@ function App() {
     map1.set('g', allAnswers.filter(el => el == 'g').length);
 
     const mapSort1 = Array.from(new Map([...map1.entries()].sort((a, b) => b[1] - a[1])));
-    console.log(mapSort1);
-
-
 
     let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
     let styles = ['Romântico', 'Elegante', 'Clássico', 'Dramático Urbano', 'Criativo',
       'Casual/Esportivo', 'Sexy'];
 
-    setPrimaryStyle(styles[letters.indexOf(mapSort1[0][0])]);
-    setSecondStyle(styles[letters.indexOf(mapSort1[1][0])]);
-    setThirdStyle(styles[letters.indexOf(mapSort1[2][0])]);
+    const primary = (styles[letters.indexOf(mapSort1[0][0])]);
+    const second = (styles[letters.indexOf(mapSort1[1][0])]);
+    const third = (styles[letters.indexOf(mapSort1[2][0])]);
+
+    setMessage(`O seu estilo predominante é o ${primary} alternado entre o ${second} e o ${third}`)
   }
 
   function setSelected(question, alternative) {
@@ -95,7 +102,7 @@ function App() {
 
       </div >
       <Modal onClose={onClose} open={isOpen} >
-        <h3>O seu estilo predominante é o {primaryStyle} alternado entre o {secondStyle} e o {thirdStyle}</h3>
+        <h3>{message}</h3>
       </Modal>
     </>
   )
