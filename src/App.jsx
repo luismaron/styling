@@ -110,7 +110,7 @@ function App() {
           <div>
             <button
               className={`${gender === "female" ? "inactive" : ""}`}
-              onClick={(e) => {
+              onClick={() => {
                 onGenderChange("female");
               }}
             >
@@ -118,7 +118,7 @@ function App() {
             </button>
             <button
               className={`${gender === "male" ? "inactive" : ""}`}
-              onClick={(e) => {
+              onClick={() => {
                 onGenderChange("male");
               }}
             >
